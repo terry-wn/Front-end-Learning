@@ -1,0 +1,26 @@
+当前目录："E:\网盘分享WPFX.ORG\基于 hapi 的 Node.js 小程序后端开发实践指南" 
+文件夹 PATH 列表
+卷序列号为 09C1-B27D
+E:.
+    0开篇： 小程序的 Node.js 全栈之路【网盘分享WPFX.ORG】.md
+    10实战篇 7：小程序登录授权 与 JWT 签发【网盘分享WPFX.ORG】.md
+    11实战篇 8：小程序订单创建 —— 使用事务【网盘分享WPFX.ORG】.md
+    12实战篇 9：小程序订单支付 —— 支付【网盘分享WPFX.ORG】.md
+    13实战篇 10：服务部署发布 —— 使用小程序开发者工具【网盘分享WPFX.ORG】.md
+    14拓展篇 1：系统监控与记录 —— 使用 Good 插件【网盘分享WPFX.ORG】.md
+    15拓展篇 2：系统稳定性测试 —— 使用 Lab Code【网盘分享WPFX.ORG】.md
+    16尾声 ：项目回顾，温故知新【网盘分享WPFX.ORG】.md
+    1基础篇 1：小程序需求分析与基础设计【网盘分享WPFX.ORG】.md
+    2基础篇 2：后端技术选型 —— Node.js hapi【网盘分享WPFX.ORG】.md
+    3基础篇 3：欲善事先利器 —— Node.js 调试技巧【网盘分享WPFX.ORG】.md
+    4实战篇 1：项目工程初始化 —— 使用 hapi【网盘分享WPFX.ORG】.md
+    5实战篇 2：接口契约与入参校验 ——  使用 Swagger Joi【网盘分享WPFX.ORG】.md
+    6实战篇 3：表结构设计、迁移与数据填充 —— 使用 Sequelize-cli【网盘分享WPFX.ORG】.md
+    7实战篇 4：小程序列表获取 —— 使用 Sequelize【网盘分享WPFX.ORG】.md
+    8 实战篇 5：身份验证设计 —— 使用 JWT 【网盘分享WPFX.ORG】.md
+    9实战篇 6：身份验证实现 —— 使用 hapi-auth-jwt2【网盘分享WPFX.ORG】.md
+    fileTree.bat
+    fileTree.txt
+    
+没有子文件夹 
+

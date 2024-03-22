@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+    <html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title></title>
+    </head>
+    <body>
+    <div class="markdown-body"><style>.markdown-body{word-break:break-word;line-height:1.75;font-weight:400;font-size:16px;overflow-x:hidden;color:#252933}.markdown-body h1,.markdown-body h2,.markdown-body h3,.markdown-body h4,.markdown-body h5,.markdown-body h6{line-height:1.5;margin-top:35px;margin-bottom:10px;padding-bottom:5px}.markdown-body h1{font-size:24px;line-height:38px;margin-bottom:5px}.markdown-body h2{font-size:22px;line-height:34px;padding-bottom:12px;border-bottom:1px solid #ececec}.markdown-body h3{font-size:20px;line-height:28px}.markdown-body h4{font-size:18px;line-height:26px}.markdown-body h5{font-size:17px;line-height:24px}.markdown-body h6{font-size:16px;line-height:24px}.markdown-body p{line-height:inherit;margin-top:22px;margin-bottom:22px}.markdown-body img{max-width:100%}.markdown-body hr{border:none;border-top:1px solid #ddd;margin-top:32px;margin-bottom:32px}.markdown-body code{word-break:break-word;border-radius:2px;overflow-x:auto;background-color:#fff5f5;color:#ff502c;font-size:.87em;padding:.065em .4em}.markdown-body code,.markdown-body pre{font-family:Menlo,Monaco,Consolas,Courier New,monospace}.markdown-body pre{overflow:auto;position:relative;line-height:1.75}.markdown-body pre>code{font-size:12px;padding:15px 12px;margin:0;word-break:normal;display:block;overflow-x:auto;color:#333;background:#f8f8f8}.markdown-body a{text-decoration:none;color:#0269c8;border-bottom:1px solid #d1e9ff}.markdown-body a:active,.markdown-body a:hover{color:#275b8c}.markdown-body table{display:inline-block!important;font-size:12px;width:auto;max-width:100%;overflow:auto;border:1px solid #f6f6f6}.markdown-body thead{background:#f6f6f6;color:#000;text-align:left}.markdown-body tr:nth-child(2n){background-color:#fcfcfc}.markdown-body td,.markdown-body th{padding:12px 7px;line-height:24px}.markdown-body td{min-width:120px}.markdown-body blockquote{color:#666;padding:1px 23px;margin:22px 0;border-left:4px solid #cbcbcb;background-color:#f8f8f8}.markdown-body blockquote:after{display:block;content:""}.markdown-body blockquote>p{margin:10px 0}.markdown-body ol,.markdown-body ul{padding-left:28px}.markdown-body ol li,.markdown-body ul li{margin-bottom:0;list-style:inherit}.markdown-body ol li .task-list-item,.markdown-body ul li .task-list-item{list-style:none}.markdown-body ol li .task-list-item ol,.markdown-body ol li .task-list-item ul,.markdown-body ul li .task-list-item ol,.markdown-body ul li .task-list-item ul{margin-top:0}.markdown-body ol ol,.markdown-body ol ul,.markdown-body ul ol,.markdown-body ul ul{margin-top:3px}.markdown-body ol li{padding-left:6px}.markdown-body .contains-task-list{padding-left:0}.markdown-body .task-list-item{list-style:none}@media (max-width:720px){.markdown-body h1{font-size:24px}.markdown-body h2{font-size:20px}.markdown-body h3{font-size:18px}}</style><style data-highlight="" data-highlight-key="juejin">.markdown-body pre,.markdown-body pre>code.hljs{color:#333;background:#f8f8f8}.hljs-comment,.hljs-quote{color:#998;font-style:italic}.hljs-keyword,.hljs-selector-tag,.hljs-subst{color:#333;font-weight:700}.hljs-literal,.hljs-number,.hljs-tag .hljs-attr,.hljs-template-variable,.hljs-variable{color:teal}.hljs-doctag,.hljs-string{color:#d14}.hljs-section,.hljs-selector-id,.hljs-title{color:#900;font-weight:700}.hljs-subst{font-weight:400}.hljs-class .hljs-title,.hljs-type{color:#458;font-weight:700}.hljs-attribute,.hljs-name,.hljs-tag{color:navy;font-weight:400}.hljs-link,.hljs-regexp{color:#009926}.hljs-bullet,.hljs-symbol{color:#990073}.hljs-built_in,.hljs-builtin-name{color:#0086b3}.hljs-meta{color:#999;font-weight:700}.hljs-deletion{background:#fdd}.hljs-addition{background:#dfd}.hljs-emphasis{font-style:italic}.hljs-strong{font-weight:700}</style><h2 data-id="heading-0">前言</h2>
+<p>在上一章中，我们对 <strong>CLI</strong> 创建的基础工程模板添加了一些通用性的功能配置，也能满足大部分业务开发的需求。</p>
+<p>在完成了基础配置之后，就可以根据自身团队的情况来开发专属的业务功能，例如团队中使用企业微信、钉钉、飞书等企业工具，可以对接匹配的三方功能。在用户系统中，为了开发便捷以及方便团队的使用，我们可以借助三方登录帮助获取团队和个人的信息。另外上述几个三方软件也提供了很多便捷的功能，例如机器人、消息通知、文档等。</p>
+<p>在 <a href="https://juejin.cn/book/6948353204648148995" target="_blank" title="https://juejin.cn/book/6948353204648148995">DevOps 小册</a>中，使用钉钉作为三方拓展，为了带给大家不一样的学习体验，这次将使用飞书作为用例来完成我们用户、机器人等功能。</p>
+<h2 data-id="heading-1">飞书应用对接</h2>
+<h3 data-id="heading-2">创建应用</h3>
+<p>要利用飞书的功能的话，首先先要去<a href="https://link.juejin.cn?target=https%3A%2F%2Fopen.feishu.cn%2Fapp" target="_blank" rel="nofollow noopener noreferrer" title="https://open.feishu.cn/app" ref="nofollow noopener noreferrer">开放平台</a>创建一个飞书应用，如下图所示：</p>
+<p><img src="p1-juejin.byteimg.comtos-cn-i-k3u1fbpfcpbfe6b0b9245341da933be8c9c2f86091~tplv-k3u1fbpfcp-zoom-in-crop-mark3024000.awebp?" alt="image.png" loading="lazy" class="medium-zoom-image"></p>
+<p>创建完毕之后，需要拿到飞书应用的 <strong>App ID</strong>（应用唯一的 ID 标识） 与 <strong>App Secret</strong>（应用的密钥） 才能调用飞书的 <strong>Open API</strong>。</p>
+<p><img src="p3-juejin.byteimg.comtos-cn-i-k3u1fbpfcp348117865caf41b09d9bdd7be54f82b3~tplv-k3u1fbpfcp-zoom-in-crop-mark3024000.awebp?" alt="image.png" loading="lazy" class="medium-zoom-image"></p>
+<h3 data-id="heading-3">封装底层请求库</h3>
+<p>虽然 <code>NestJS</code> 内置了 <code>@nestjs/axios</code> 请求库，但是对于飞书的 <code>Open API</code> 封装，我们还是利用之前的模式，不将它与 <code>NestJS</code> 过度的耦合在一起。</p>
+<blockquote>
+<p>将飞书 <strong>Open Api</strong> 独立封装之后，可以抽成一个工具库，后期可以提供给其他的 <code>SDK</code> 使用，如果跟 <code>NestJS</code> 耦合过多，想提供给其他 <code>SDK</code> 使用的话，就只能提供 <code>Http</code> 请求调用的方式，使用起来不太方便。看个人习惯，我倾向使用独立封装的模式。</p>
+</blockquote>
+<ol>
+<li>添加应用配置，使用上一章节的环境配置功能，在 <code>yaml</code> 文件中添加飞书的配置项：</li>
+</ol>
+<pre><code class="hljs language-yaml" lang="yaml"><span class="hljs-attr">FEISHU_CONFIG:</span>
+  <span class="hljs-attr">FEISHU_URL:</span> <span class="hljs-string">https://open.feishu.cn/open-apis</span>
+  <span class="hljs-attr">FEISHU_API_HOST:</span> <span class="hljs-string">https://open.feishu.cn</span>
+  <span class="hljs-attr">FEISHU_APP_ID:</span> <span class="hljs-string">balabalabala</span>
+  <span class="hljs-attr">FEISHU_APP_SECRET:</span> <span class="hljs-string">balabalabala</span>
+</code></pre>
+<blockquote>
+<p><strong>ID</strong> 与 <strong>Secret</strong> 的信息记得妥善保管，如果你创建的应用权限过高的话，意外泄密可能会导致不可预期的损失，<strong>切记</strong>！</p>
+</blockquote>
+<ol start="2">
+<li>新建 <code>utils/request.ts</code> 文件：</li>
+</ol>
+<pre><code class="hljs language-ts" lang="ts"><span class="hljs-keyword">import</span> axios, { <span class="hljs-title class_">Method</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">'axios'</span>;
+<span class="hljs-keyword">import</span> { getConfig } <span class="hljs-keyword">from</span> <span class="hljs-string">'@/utils'</span>;
+
+<span class="hljs-keyword">const</span> { <span class="hljs-attr">FEISHU_CONFIG</span>: { <span class="hljs-variable constant_">FEISHU_URL</span> } } = <span class="hljs-title function_">getConfig</span>()
+
+<span class="hljs-comment">/**
+ * <span class="hljs-doctag">@description</span>: 任意请求
+ */</span>
+<span class="hljs-keyword">const</span> <span class="hljs-title function_">request</span> = <span class="hljs-keyword">async</span> (<span class="hljs-params">{ url, option = {} }</span>) =&gt; {
+  <span class="hljs-keyword">try</span> {
+    <span class="hljs-keyword">return</span> axios.<span class="hljs-title function_">request</span>({
+      url,
+      ...option,
+    });
+  } <span class="hljs-keyword">catch</span> (error) {
+    <span class="hljs-keyword">throw</span> error;
+  }
+};
+
+<span class="hljs-keyword">interface</span> <span class="hljs-title class_">IMethodV</span> {
+  <span class="hljs-attr">url</span>: <span class="hljs-built_in">string</span>;
+  method?: <span class="hljs-title class_">Method</span>;
+  headers?: { [<span class="hljs-attr">key</span>: <span class="hljs-built_in">string</span>]: <span class="hljs-built_in">string</span> };
+  params?: <span class="hljs-title class_">Record</span>&lt;<span class="hljs-built_in">string</span>, <span class="hljs-built_in">unknown</span>&gt;;
+  query?: <span class="hljs-title class_">Record</span>&lt;<span class="hljs-built_in">string</span>, <span class="hljs-built_in">unknown</span>&gt;;
+}
+
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">interface</span> <span class="hljs-title class_">IRequest</span> {
+  <span class="hljs-attr">data</span>: <span class="hljs-built_in">any</span>;
+  <span class="hljs-attr">code</span>: <span class="hljs-built_in">number</span>;
+}
+
+<span class="hljs-comment">/**
+ * <span class="hljs-doctag">@description</span>: 带 version 的通用 api 请求
+ */</span>
+<span class="hljs-keyword">const</span> methodV = <span class="hljs-keyword">async</span> ({
+  url,
+  method,
+  headers,
+  params = {},
+  query = {},
+}: <span class="hljs-title class_">IMethodV</span>): <span class="hljs-title class_">Promise</span>&lt;<span class="hljs-title class_">IRequest</span>&gt; =&gt; {
+  <span class="hljs-keyword">let</span> sendUrl = <span class="hljs-string">''</span>;
+  <span class="hljs-keyword">if</span> (<span class="hljs-regexp">/^(http:\/\/|https:\/\/)/</span>.<span class="hljs-title function_">test</span>(url)) {
+    sendUrl = url;
+  } <span class="hljs-keyword">else</span> {
+    sendUrl = <span class="hljs-string">`<span class="hljs-subst">${FEISHU_URL}</span><span class="hljs-subst">${url}</span>`</span>;
+  }
+  <span class="hljs-keyword">try</span> {
+    <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Promise</span>(<span class="hljs-function">(<span class="hljs-params">resolve, reject</span>) =&gt;</span> {
+      <span class="hljs-title function_">axios</span>({
+        <span class="hljs-attr">headers</span>: {
+          <span class="hljs-string">'Content-Type'</span>: <span class="hljs-string">'application/json; charset=utf-8'</span>,
+          ...headers,
+        },
+        <span class="hljs-attr">url</span>: sendUrl,
+        method,
+        <span class="hljs-attr">params</span>: query,
+        <span class="hljs-attr">data</span>: {
+          ...params,
+        },
+      })
+        .<span class="hljs-title function_">then</span>(<span class="hljs-function">(<span class="hljs-params">{ data, status }</span>) =&gt;</span> {
+          <span class="hljs-title function_">resolve</span>({ data, <span class="hljs-attr">code</span>: status });
+        })
+        .<span class="hljs-title function_">catch</span>(<span class="hljs-function">(<span class="hljs-params">error</span>) =&gt;</span> {
+          <span class="hljs-title function_">reject</span>(error);
+        });
+    });
+  } <span class="hljs-keyword">catch</span> (error) {
+    <span class="hljs-keyword">throw</span> error;
+  }
+};
+
+<span class="hljs-keyword">export</span> { request, methodV };
+</code></pre>
+<blockquote>
+<p>这里跟之前一样，封装了两种请求方法，一种是植入飞书请求的版本，另一种是自由请求，这个习惯也看个人，如果自己的项目不需要自由请求或者直接使用 <code>@nestjs/axios</code> 的请求模块的话，可以把 <code>request</code> 方法删除。</p>
+</blockquote>
+<p>此外上述引用中，使用了 <code>alias @</code>，正常情况也是不会被 <code>TS</code> 项目识别，需要在 tsconfig.json 配置文件中添加 <code>path</code> 参数：</p>
+<pre><code class="hljs language-diff" lang="diff">{
+  "compilerOptions": {
+<span class="hljs-addition">+    "paths": {</span>
+<span class="hljs-addition">+      "@/*": [</span>
+<span class="hljs-addition">+        "src/*"</span>
+<span class="hljs-addition">+      ],</span>
+<span class="hljs-addition">+    },</span>
+    "module": "commonjs",
+    "declaration": true,
+    "removeComments": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "allowSyntheticDefaultImports": true,
+    "target": "es2017",
+    "sourceMap": true,
+    "outDir": "./dist",
+    "baseUrl": "./",
+    "incremental": true,
+    "skipLibCheck": true,
+    "strictNullChecks": false,
+    "noImplicitAny": false,
+    "strictBindCallApply": false,
+    "forceConsistentCasingInFileNames": false,
+    "noFallthroughCasesInSwitch": false,
+    "resolveJsonModule": true
+  }
+}
+</code></pre>
+<ol start="3">
+<li>创建飞书请求基础层，如下图所示：</li>
+</ol>
+<p><img src="p3-juejin.byteimg.comtos-cn-i-k3u1fbpfcp5940e9416a8d4b4aa34c7fb4e0c8edf7~tplv-k3u1fbpfcp-zoom-in-crop-mark3024000.awebp?" alt="image.png" loading="lazy" class="medium-zoom-image"></p>
+<p>上图中封装的模块比较少，只有权限、用户等模块，实际开发中需要按照业务需求选择性封装对应的模块，比如群组、消息、通讯录等等。下面以获取 <code>Token</code> 的方法做一个简单的示例：</p>
+<pre><code class="hljs language-ts" lang="ts"><span class="hljs-keyword">import</span> { <span class="hljs-variable constant_">APP_ID</span>, <span class="hljs-variable constant_">APP_SECRET</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">'./const'</span>;
+<span class="hljs-keyword">import</span> { methodV } <span class="hljs-keyword">from</span> <span class="hljs-string">'src/utils/request'</span>;
+
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">type</span> <span class="hljs-title class_">GetAppTokenRes</span> = {
+  <span class="hljs-attr">code</span>: <span class="hljs-built_in">number</span>;
+  <span class="hljs-attr">msg</span>: <span class="hljs-built_in">string</span>;
+  <span class="hljs-attr">app_access_token</span>: <span class="hljs-built_in">string</span>;
+  <span class="hljs-attr">expire</span>: <span class="hljs-built_in">number</span>;
+};
+
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> <span class="hljs-title function_">getAppToken</span> = <span class="hljs-keyword">async</span> (<span class="hljs-params"></span>) =&gt; {
+  <span class="hljs-keyword">const</span> { data } = <span class="hljs-keyword">await</span> <span class="hljs-title function_">methodV</span>({
+    <span class="hljs-attr">url</span>: <span class="hljs-string">`/auth/v3/app_access_token/internal`</span>,
+    <span class="hljs-attr">method</span>: <span class="hljs-string">'POST'</span>,
+    <span class="hljs-attr">params</span>: {
+      <span class="hljs-attr">app_id</span>: <span class="hljs-variable constant_">APP_ID</span>,
+      <span class="hljs-attr">app_secret</span>: <span class="hljs-variable constant_">APP_SECRET</span>,
+    },
+  });
+  <span class="hljs-keyword">return</span> data <span class="hljs-keyword">as</span> <span class="hljs-title class_">GetAppTokenRes</span>;
+};
+</code></pre>
+<p>以上就已经完成了一个独立的飞书应用底层请求层的封装，接下来看如何在业务中使用。</p>
+<h2 data-id="heading-4">调用飞书 API</h2>
+<p><img src="p6-juejin.byteimg.comtos-cn-i-k3u1fbpfcp0ff30c28ef3a46a789afab078648819d~tplv-k3u1fbpfcp-zoom-in-crop-mark3024000.awebp?" alt="image.png" loading="lazy" class="medium-zoom-image"></p>
+<p>飞书的调用文档还是非常详细的，正确的按照上图所示的流程操作，一般出现异常的概率不大。</p>
+<p>第 <strong>1</strong>,<strong>2</strong> 步骤，我们已经完成了（应用申请与权限授予），按照步骤 <strong>3</strong> 需要封装 <a href="https://link.juejin.cn?target=https%3A%2F%2Fopen.feishu.cn%2Fdocument%2FukTMukTMukTM%2FuMTNz4yM1MjLzUzM" target="_blank" rel="nofollow noopener noreferrer" title="https://open.feishu.cn/document/ukTMukTMukTM/uMTNz4yM1MjLzUzM" ref="nofollow noopener noreferrer">API 访问凭证</a> 方便后续的调用。</p>
+<h4 data-id="heading-5">封装 API 访问凭证</h4>
+<p>根据文档描述，飞书提供了下述 <strong>3</strong> 种访问凭证，分别有不同的用途：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>访问凭证类型</th><th>是否需要用户授权</th><th>是否需要租户管理员授权</th><th>适用的应用场景</th></tr></thead><tbody><tr><td>app_access_token</td><td>不需要</td><td>不需要</td><td>纯后台服务等</td></tr><tr><td>tenant_access_token</td><td>不需要</td><td>需要</td><td>网页应用、机器人、纯后台服务等</td></tr><tr><td>user_access_token</td><td>需要</td><td>不需要</td><td>小程序、网页应用等</td></tr></tbody></table>
+<p>凭证的有效期是 <strong>2</strong> 小时，只有在小于 <strong>30</strong> 分钟的时候调用才会返回新的凭证，否则返回的还是原凭证，所以频繁调用返回的价值不大。</p>
+<p>调用三方接口获取凭证后，再使用凭证调用 <strong>API</strong> 的链路过程比较长，同时也可能收网络波动、请求频率的限制，需要将凭证缓存在本地，等有效期小于 <strong>30</strong> 分钟时再去换取新的凭证，减少调用链接、降低请求频率。</p>
+<p><code>NestJS</code> 提供了<strong>高速缓存</strong>的插件 <code>cache-manager</code>，为对各种缓存存储提供程序提供了统一的&nbsp;<code>API</code>，内置的是内存中的数据存储。</p>
+<ol>
+<li>安装对应的依赖与 <code>@types</code></li>
+</ol>
+<pre><code class="hljs language-shell" lang="shell"><span class="hljs-meta prompt_">$ </span><span class="bash">yarn add cache-manager</span> 
+<span class="hljs-meta prompt_">$ </span><span class="bash">yarn add -D @types/cache-manager</span>
+</code></pre>
+<ol start="2">
+<li>再在使用的 <code>Module</code> 中注册 <code>CacheModule</code>，新建 <code>src/user/user.module.ts</code></li>
+</ol>
+<pre><code class="hljs language-ts" lang="ts"><span class="hljs-keyword">import</span> { <span class="hljs-title class_">CacheModule</span>, forwardRef, <span class="hljs-title class_">Module</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">'@nestjs/common'</span>;
+<span class="hljs-keyword">import</span> { <span class="hljs-title class_">FeishuService</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">'./feishu/feishu.service'</span>;
+<span class="hljs-keyword">import</span> { <span class="hljs-title class_">FeishuController</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">'./feishu/feishu.controller'</span>;
+
+<span class="hljs-meta">@Module</span>({
+  <span class="hljs-attr">imports</span>: [
+    <span class="hljs-title class_">CacheModule</span>.<span class="hljs-title function_">register</span>(),
+  ],
+  <span class="hljs-attr">controllers</span>: [
+    <span class="hljs-title class_">FeishuController</span>
+  ],
+  <span class="hljs-attr">providers</span>: [<span class="hljs-title class_">FeishuService</span>],
+})
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">UserModule</span> { }
+</code></pre>
+<p>如果需要在其他地方也使用缓存，但又不想每次都引入 <code>CacheModule</code>，也可以在 <code>app.module.ts</code> 中引入，跟 <code>ConfigModule</code> 开启全局配置即可：</p>
+<pre><code class="hljs language-ts" lang="ts"><span class="hljs-keyword">import</span> { <span class="hljs-title class_">CacheModule</span>, <span class="hljs-title class_">Module</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">'@nestjs/common'</span>;
+<span class="hljs-keyword">import</span> { <span class="hljs-title class_">AppController</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">'./app.controller'</span>;
+<span class="hljs-keyword">import</span> { <span class="hljs-title class_">AppService</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">'./app.service'</span>;
+<span class="hljs-keyword">import</span> { <span class="hljs-title class_">UserModule</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">'./user/user.module'</span>;
+<span class="hljs-keyword">import</span> { <span class="hljs-title class_">ConfigModule</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">'@nestjs/config'</span>;
+<span class="hljs-keyword">import</span> { getConfig } <span class="hljs-keyword">from</span> <span class="hljs-string">'./utils'</span>;
+
+<span class="hljs-meta">@Module</span>({
+  <span class="hljs-attr">imports</span>: [
+    <span class="hljs-title class_">CacheModule</span>.<span class="hljs-title function_">register</span>({
+      <span class="hljs-attr">isGlobal</span>: <span class="hljs-literal">true</span>,
+    }),
+    <span class="hljs-title class_">ConfigModule</span>.<span class="hljs-title function_">forRoot</span>({
+      <span class="hljs-attr">ignoreEnvFile</span>: <span class="hljs-literal">true</span>,
+      <span class="hljs-attr">isGlobal</span>: <span class="hljs-literal">true</span>,
+      <span class="hljs-attr">load</span>: [getConfig]
+    }), <span class="hljs-title class_">UserModule</span>],
+  <span class="hljs-attr">controllers</span>: [<span class="hljs-title class_">AppController</span>],
+  <span class="hljs-attr">providers</span>: [<span class="hljs-title class_">AppService</span>],
+})
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">AppModule</span> { }
+</code></pre>
+<blockquote>
+<p>为了项目开发方便，我们的项目默认开启全局缓存配置，所以不需要在 <code>user.module.ts</code> 再次注册 <code>CacheModule</code></p>
+</blockquote>
+<p>在 <code>yaml</code> 配置文件中添加缓存 <code>key</code> =&gt; <code>APP_TOKEN_CACHE_KEY</code>，注意如果不添加缓存 <code>key</code> 的话，在高速缓存里面可以读取数据，但是在下一章替换 <code>Redis</code> 的时候，由于未配置 <code>key</code>，程序将使用 <code>undefined</code> 读取 <code>Redis</code>，导致 <code>Redis</code> 报错。</p>
+<pre><code class="hljs language-yaml" lang="yaml"><span class="hljs-attr">APP_TOKEN_CACHE_KEY:</span> <span class="hljs-string">APP_TOKEN_CACHE_KEY</span>
+</code></pre>
+<ol start="3">
+<li>新建 <code>src/user/feishu/feishu.service.ts</code></li>
+</ol>
+<pre><code class="hljs language-ts" lang="ts"><span class="hljs-keyword">import</span> { <span class="hljs-variable constant_">CACHE_MANAGER</span>, <span class="hljs-title class_">Inject</span>, <span class="hljs-title class_">Injectable</span>, <span class="hljs-title class_">Logger</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">'@nestjs/common'</span>;
+<span class="hljs-keyword">import</span> {
+  getAppToken,
+  getUserAccessToken,
+  getUserToken,
+  refreshUserToken,
+} <span class="hljs-keyword">from</span> <span class="hljs-string">'src/helper/feishu/auth'</span>;
+<span class="hljs-keyword">import</span> { <span class="hljs-title class_">Cache</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">'cache-manager'</span>;
+<span class="hljs-keyword">import</span> { <span class="hljs-title class_">BusinessException</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">'@/common/exceptions/business.exception'</span>;
+<span class="hljs-keyword">import</span> { <span class="hljs-title class_">ConfigService</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">'@nestjs/config'</span>;
+
+<span class="hljs-meta">@Injectable</span>()
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">FeishuService</span> {
+  <span class="hljs-keyword">private</span> <span class="hljs-variable constant_">APP_TOKEN_CACHE_KEY</span>
+  <span class="hljs-title function_">constructor</span>(<span class="hljs-params">
+    <span class="hljs-meta">@Inject</span>(CACHE_MANAGER) <span class="hljs-keyword">private</span> cacheManager: Cache,
+    <span class="hljs-keyword">private</span> configService: ConfigService,
+  </span>) {
+    <span class="hljs-variable language_">this</span>.<span class="hljs-property">APP_TOKEN_CACHE_KEY</span> = <span class="hljs-variable language_">this</span>.<span class="hljs-property">configService</span>.<span class="hljs-title function_">get</span>(<span class="hljs-string">'APP_TOKEN_CACHE_KEY'</span>)
+  }
+
+  <span class="hljs-keyword">async</span> <span class="hljs-title function_">getAppToken</span>(<span class="hljs-params"></span>) {
+    <span class="hljs-keyword">let</span> <span class="hljs-attr">appToken</span>: <span class="hljs-built_in">string</span>;
+    appToken = <span class="hljs-keyword">await</span> <span class="hljs-variable language_">this</span>.<span class="hljs-property">cacheManager</span>.<span class="hljs-title function_">get</span>(<span class="hljs-variable language_">this</span>.<span class="hljs-property">APP_TOKEN_CACHE_KEY</span>);
+    <span class="hljs-keyword">if</span> (!appToken) {
+      <span class="hljs-keyword">const</span> response = <span class="hljs-keyword">await</span> <span class="hljs-title function_">getAppToken</span>();
+      <span class="hljs-keyword">if</span> (response.<span class="hljs-property">code</span> === <span class="hljs-number">0</span>) {
+        <span class="hljs-comment">// token 有效期为 2 小时，在此期间调用该接口 token 不会改变。当 token 有效期小于 30 分的时候,再次请求获取 token 的时候，会生成一个新的 token，与此同时老的 token 依然有效。</span>
+        appToken = response.<span class="hljs-property">app_access_token</span>;
+        <span class="hljs-variable language_">this</span>.<span class="hljs-property">cacheManager</span>.<span class="hljs-title function_">set</span>(<span class="hljs-variable language_">this</span>.<span class="hljs-property">APP_TOKEN_CACHE_KEY</span>, appToken, {
+          <span class="hljs-attr">ttl</span>: response.<span class="hljs-property">expire</span> - <span class="hljs-number">60</span>,
+        });
+      } <span class="hljs-keyword">else</span> {
+        <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">BusinessException</span>(<span class="hljs-string">'飞书调用异常'</span>)
+      }
+    }
+    <span class="hljs-keyword">return</span> appToken;
+  }
+}
+</code></pre>
+<p>为了和缓存管理器实例进行交互，需要使用 <code>CACHE_MANAGER</code> 标记将其注入 <code>cacheManager</code> 实例。</p>
+<p><code>Cache</code> 的实例 <code>cacheManager</code>，拥有 <code>get</code>、<code>set</code>、<code>del</code> 等多个方法，使用起来非常方便，也提供存储缓存过期时间的配置项 <code>ttl</code>（位于 <code>key</code> 与 <code>value</code> 之后的第三个传入参数），可以根据需求自行配置，上述代码就是配置了缓存时间的示例，在换取不到凭证或者本地缓存超时之后才会请求飞书的接口换取新的凭证。</p>
+<h4 data-id="heading-6">飞书机器人</h4>
+<p>封装完应用凭证之后就可以使用凭证调用飞书的 Open API，这里我们使用飞书机器人推送消息作为例子给大家演示一下。</p>
+<ol>
+<li>
+<p>首先需要开启机器人的能力。
+<img src="p3-juejin.byteimg.comtos-cn-i-k3u1fbpfcp6b07f7db3b604a5db992049e0e3447ef~tplv-k3u1fbpfcp-zoom-in-crop-mark3024000.awebp?" alt="image.png" loading="lazy" class="medium-zoom-image"></p>
+</li>
+<li>
+<p>发布应用并选择应用使用范围，如果不在应用可用范围的用户，机器人是没办法推送消息的。
+<img src="p1-juejin.byteimg.comtos-cn-i-k3u1fbpfcpe7a9bee8fb874984850c08acf70cfb22~tplv-k3u1fbpfcp-zoom-in-crop-mark3024000.awebp?" alt="image.png" loading="lazy" class="medium-zoom-image"></p>
+</li>
+<li>
+<p>封装机器人发送消息对应的 API。</p>
+</li>
+</ol>
+<p>发送消息的接口为 <a href="https://link.juejin.cn?target=https%3A%2F%2Fopen.feishu.cn%2Fopen-apis%2Fim%2Fv1%2Fmessages%3Freceive_id_type%3D%255B%255D" target="_blank" rel="nofollow noopener noreferrer" title="https://open.feishu.cn/open-apis/im/v1/messages?receive_id_type=%5B%5D" ref="nofollow noopener noreferrer">open.feishu.cn/open-apis/i…</a> ，可用根据以下几种类型发送消息给指定的用户或群组：</p>
+<p><code>Query 参数 receive_id_type</code> <strong>可选值</strong>：</p>
+<ul>
+<li><code>open_id</code>：以 open_id 来识别用户(<a href="https://link.juejin.cn?target=https%3A%2F%2Fopen.feishu.cn%2Fdocument%2Fhome%2Fuser-identity-introduction%2Fopen-id" target="_blank" rel="nofollow noopener noreferrer" title="https://open.feishu.cn/document/home/user-identity-introduction/open-id" ref="nofollow noopener noreferrer">什么是 Open ID</a>) 。</li>
+<li><code>user_id</code>：以 user_id 来识别用户，需要有获取用户 userID 的权限 (<a href="https://link.juejin.cn?target=https%3A%2F%2Fopen.feishu.cn%2Fdocument%2Fhome%2Fuser-identity-introduction%2Fuser-id" target="_blank" rel="nofollow noopener noreferrer" title="https://open.feishu.cn/document/home/user-identity-introduction/user-id" ref="nofollow noopener noreferrer">什么是 User ID</a>)。</li>
+<li><code>union_id</code>：以 union_id 来识别用户(<a href="https://link.juejin.cn?target=https%3A%2F%2Fopen.feishu.cn%2Fdocument%2Fhome%2Fuser-identity-introduction%2Funion-id" target="_blank" rel="nofollow noopener noreferrer" title="https://open.feishu.cn/document/home/user-identity-introduction/union-id" ref="nofollow noopener noreferrer">什么是 Union ID</a>)。</li>
+<li><code>email</code>：以 email 来识别用户，是用户的真实邮箱。</li>
+<li><code>chat_id</code>：以 chat_id 来识别群聊，群 ID 说明请参考：<a href="https://link.juejin.cn?target=https%3A%2F%2Fopen.feishu.cn%2Fdocument%2FuAjLw4CM%2FukTMukTMukTM%2Freference%2Fim-v1%2Fchat-id-description" target="_blank" rel="nofollow noopener noreferrer" title="https://open.feishu.cn/document/uAjLw4CM/ukTMukTMukTM/reference/im-v1/chat-id-description" ref="nofollow noopener noreferrer">群ID 说明</a> 。</li>
+</ul>
+<p>根据发送用户与信息的类型有如下几种参数。</p>
+<p><code>Body</code> <strong>参数</strong>：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>名称</th><th>类型</th><th>必填</th><th>描述</th></tr></thead><tbody><tr><td>receive_id</td><td>string</td><td>是</td><td>依据 receive_id_type 的值，填写对应的消息接收者 id<strong>示例值</strong>："ou_7d8a6e6df7621556ce0d21922b676706ccs"</td></tr><tr><td>content</td><td>string</td><td>是</td><td>消息内容，json 结构序列化后的字符串。不同msg_type对应不同内容。消息类型 包括：text、post、image、file、audio、media、sticker、interactive、share_chat、share_user等，具体格式说明参考：<a href="https://link.juejin.cn?target=https%3A%2F%2Fopen.feishu.cn%2Fdocument%2FuAjLw4CM%2FukTMukTMukTM%2Fim-v1%2Fmessage%2Fcreate_json" target="_blank" rel="nofollow noopener noreferrer" title="https://open.feishu.cn/document/uAjLw4CM/ukTMukTMukTM/im-v1/message/create_json" ref="nofollow noopener noreferrer">发送消息content说明</a></td></tr><tr><td>msg_type</td><td>string</td><td>是</td><td>消息类型 包括：text、post、image、file、audio、media、sticker、interactive、share_chat、share_user等，类型定义请参考<a href="https://link.juejin.cn?target=https%3A%2F%2Fopen.feishu.cn%2Fdocument%2FuAjLw4CM%2FukTMukTMukTM%2Fim-v1%2Fmessage%2Fcreate_json" target="_blank" rel="nofollow noopener noreferrer" title="https://open.feishu.cn/document/uAjLw4CM/ukTMukTMukTM/im-v1/message/create_json" ref="nofollow noopener noreferrer">发送消息content说明</a></td></tr></tbody></table>
+<p>根据上述的接口描述，可用封装如下的函数：</p>
+<pre><code class="hljs language-ts" lang="ts"><span class="hljs-keyword">import</span> { methodV } <span class="hljs-keyword">from</span> <span class="hljs-string">'src/utils/request'</span>;
+
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">enum</span> <span class="hljs-variable constant_">RECEIVE_TYPE</span> { <span class="hljs-string">'open_id'</span>, <span class="hljs-string">'user_id'</span>, <span class="hljs-string">'union_id'</span>, <span class="hljs-string">'email'</span>, <span class="hljs-string">'chat_id'</span> }
+
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">enum</span> <span class="hljs-variable constant_">MSG_TYPE</span> { text, post, image, file, audio, media, sticker, interactive, share_chat, share_user}
+
+<span class="hljs-keyword">type</span> <span class="hljs-variable constant_">MESSAGES_PARAMS</span> = {
+  <span class="hljs-attr">receive_id</span>: <span class="hljs-built_in">string</span>
+  <span class="hljs-attr">content</span>: <span class="hljs-built_in">string</span>
+  <span class="hljs-attr">msg_type</span>: <span class="hljs-variable constant_">MSG_TYPE</span>
+}
+
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> <span class="hljs-title function_">messages</span> = <span class="hljs-keyword">async</span> (<span class="hljs-params">receive_id_type: RECEIVE_TYPE, params: MESSAGES_PARAMS, app_token: <span class="hljs-built_in">string</span></span>) =&gt; {
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(receive_id_type, params, app_token)
+
+  <span class="hljs-keyword">const</span> { data } = <span class="hljs-keyword">await</span> <span class="hljs-title function_">methodV</span>({
+    <span class="hljs-attr">url</span>: <span class="hljs-string">`/im/v1/messages`</span>,
+    <span class="hljs-attr">method</span>: <span class="hljs-string">'POST'</span>,
+    <span class="hljs-attr">query</span>: { receive_id_type },
+    params,
+    <span class="hljs-attr">headers</span>: {
+      <span class="hljs-title class_">Authorization</span>: <span class="hljs-string">`Bearer <span class="hljs-subst">${app_token}</span>`</span>,
+    },
+  });
+  <span class="hljs-keyword">return</span> data;
+};
+</code></pre>
+<ol start="4">
+<li>开发对应的 <code>Service</code>。</li>
+</ol>
+<pre><code class="hljs language-ts" lang="ts">  <span class="hljs-keyword">async</span> <span class="hljs-title function_">sendMessage</span>(<span class="hljs-params">receive_id_type, params</span>) {
+    <span class="hljs-keyword">const</span> app_token = <span class="hljs-keyword">await</span> <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">getAppToken</span>()
+    <span class="hljs-keyword">return</span> <span class="hljs-title function_">messages</span>(receive_id_type, params, app_token <span class="hljs-keyword">as</span> <span class="hljs-built_in">string</span>)
+  }
+</code></pre>
+<p>注意：这里的 <code>app_token</code> 获取方式使用上述封装好的访问凭证方法，带有缓存的版本。</p>
+<ol start="5">
+<li>新建对应的 <code>feishu.controller.ts</code>  以及 <code>feishu.dto.ts</code>：</li>
+</ol>
+<pre><code class="hljs language-ts" lang="ts"><span class="hljs-keyword">import</span> { <span class="hljs-title class_">Body</span>, <span class="hljs-title class_">Controller</span>, <span class="hljs-title class_">Post</span>, <span class="hljs-title class_">Version</span>, <span class="hljs-variable constant_">VERSION_NEUTRAL</span>, } <span class="hljs-keyword">from</span> <span class="hljs-string">'@nestjs/common'</span>;
+<span class="hljs-keyword">import</span> { <span class="hljs-title class_">ApiOperation</span>, <span class="hljs-title class_">ApiTags</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">'@nestjs/swagger'</span>;
+<span class="hljs-keyword">import</span> { <span class="hljs-title class_">FeishuService</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">'./feishu.service'</span>;
+<span class="hljs-keyword">import</span> { <span class="hljs-title class_">FeishuMessageDto</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">'./feishu.dto'</span>;
+
+<span class="hljs-meta">@ApiTags</span>(<span class="hljs-string">'飞书'</span>)
+<span class="hljs-meta">@Controller</span>(<span class="hljs-string">'feishu'</span>)
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">FeishuController</span> {
+  <span class="hljs-title function_">constructor</span>(<span class="hljs-params"><span class="hljs-keyword">private</span> <span class="hljs-keyword">readonly</span> feishuService: FeishuService</span>) { }
+
+  <span class="hljs-meta">@ApiOperation</span>({
+    <span class="hljs-attr">summary</span>: <span class="hljs-string">'消息推送'</span>,
+  })
+  <span class="hljs-meta">@Version</span>([<span class="hljs-variable constant_">VERSION_NEUTRAL</span>])
+  <span class="hljs-meta">@Post</span>(<span class="hljs-string">'sendMessage'</span>)
+  <span class="hljs-title function_">sendMessage</span>(<span class="hljs-params"><span class="hljs-meta">@Body</span>() params: FeishuMessageDto</span>) {
+    <span class="hljs-keyword">const</span> { receive_id_type, ...rest } = params
+    <span class="hljs-keyword">return</span> <span class="hljs-variable language_">this</span>.<span class="hljs-property">feishuService</span>.<span class="hljs-title function_">sendMessage</span>(receive_id_type, rest);
+  }
+}
+</code></pre>
+<pre><code class="hljs language-ts" lang="ts"><span class="hljs-keyword">import</span> { <span class="hljs-variable constant_">RECEIVE_TYPE</span>, <span class="hljs-variable constant_">MSG_TYPE</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">'@/helper/feishu/message'</span>;
+<span class="hljs-keyword">import</span> { <span class="hljs-title class_">ApiProperty</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">'@nestjs/swagger'</span>;
+
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">FeishuMessageDto</span> {
+  <span class="hljs-meta">@ApiProperty</span>({ <span class="hljs-attr">example</span>: <span class="hljs-string">'email'</span>})
+  <span class="hljs-attr">receive_id_type</span>: <span class="hljs-variable constant_">RECEIVE_TYPE</span>
+
+  <span class="hljs-meta">@ApiProperty</span>({ <span class="hljs-attr">example</span>: <span class="hljs-string">'cookieboty@qq.com'</span> })
+  receive_id?: <span class="hljs-built_in">string</span>
+
+  <span class="hljs-meta">@ApiProperty</span>({ <span class="hljs-attr">example</span>: <span class="hljs-string">'{\"text\":\" test content\"}'</span> })
+  content?: <span class="hljs-built_in">string</span>
+
+  <span class="hljs-meta">@ApiProperty</span>({ <span class="hljs-attr">example</span>: <span class="hljs-string">'text'</span>, <span class="hljs-attr">enum</span>: <span class="hljs-variable constant_">MSG_TYPE</span> })
+  msg_type?: keyof <span class="hljs-variable constant_">MSG_TYPE</span>
+}
+</code></pre>
+<ol start="6">
+<li>正常导入 <code>Module</code> 之后，打开 <code>swagger</code> 可以看到对应的接口信息。</li>
+</ol>
+<p><img src="p1-juejin.byteimg.comtos-cn-i-k3u1fbpfcpd8dd231ebdd648129c393dd01fc3c1e2~tplv-k3u1fbpfcp-zoom-in-crop-mark3024000.awebp?" alt="image.png" loading="lazy" class="medium-zoom-image"></p>
+<ol start="7">
+<li>点击 <strong>Try it out</strong> 发送测试信息，如果按照步骤一路下来的话，应该能正常收到飞书机器人推送的消息了。</li>
+</ol>
+<p><img src="p6-juejin.byteimg.comtos-cn-i-k3u1fbpfcpeca80f9932d048e9b049c41d8515e29b~tplv-k3u1fbpfcp-zoom-in-crop-mark3024000.awebp?" alt="image.png" loading="lazy" class="medium-zoom-image"></p>
+<p>以上就完成了飞书机器人推送消息的开发，大家可以发挥自己的想象，看在什么场景需要推送消息，例如：<code>CICD</code>、安全预警、流程流转、<code>Bug</code> 通知等等各种场景推送。</p>
+<p>同时，飞书机器的消息有很多个性化的设计，例如卡片消息、富文本、语音等等，卡片消息飞书也提供了<a href="https://link.juejin.cn?target=https%3A%2F%2Fopen.feishu.cn%2Ftool%2Fcardbuilder" target="_blank" rel="nofollow noopener noreferrer" title="https://open.feishu.cn/tool/cardbuilder" ref="nofollow noopener noreferrer">可视化搭建的工具</a>，非常方便定制化一套漂亮的卡片消息：</p>
+<p><img src="p9-juejin.byteimg.comtos-cn-i-k3u1fbpfcp6608a7fe10e446449f548bdb2056c80f~tplv-k3u1fbpfcp-zoom-in-crop-mark3024000.awebp?" alt="image.png" loading="lazy" class="medium-zoom-image"></p>
+<blockquote>
+<p><strong>飞书发送消息使用的邮箱与你登录注册邮箱并不相同</strong>，有不少同学会卡在这一步，如果需要使用邮箱发送的同学需要在管理员后台配置该用户的邮箱才能正常发送信息，或者可以使用手机号、用户 id 来发送消息。<strong>同时要注意发送消息的机器人要具备推送消息的权限</strong>。</p>
+</blockquote>
+<h4 data-id="heading-7">完善体验</h4>
+<p>前面的流程都是正常请求，接下来我们看下非正常请求。首先，将 <code>receive_id_type</code> 的类型改成 <code>email2</code>，这个参数没有存在于飞书文档中提供的参数类型中，然后请求接口：</p>
+<p><img src="p6-juejin.byteimg.comtos-cn-i-k3u1fbpfcp825fe40a83e746b79e9256a51d5e70a9~tplv-k3u1fbpfcp-zoom-in-crop-mark3024000.awebp?" alt="image.png" loading="lazy" class="medium-zoom-image"></p>
+<p>可以看到，返回的接口是业务性质的通用报错 503，但我们已经预先知道了请求参数类型有几种，这种错误可以在请求飞书之后就预先校验出来，减少请求次数同时给予用户正确的反馈，我们可以借助 <code>class-validator</code> 来做入参校验：</p>
+<ol>
+<li>安装 <code>class-validator</code> 相关的依赖。</li>
+</ol>
+<pre><code class="hljs language-shell" lang="shell"><span class="hljs-meta prompt_">$ </span><span class="bash">yarn add class-validator class-transformer</span>
+</code></pre>
+<ol start="2">
+<li><code>main.ts</code> 添加 <code>ValidationPipe</code> 验证管道，从 <code>@nestjs/common</code> 导出。</li>
+</ol>
+<pre><code class="hljs language-diff" lang="diff"><span class="hljs-addition">+import { ValidationPipe, VersioningType, VERSION_NEUTRAL } from '@nestjs/common';</span>
+import { NestFactory } from '@nestjs/core';
+import {
+  FastifyAdapter,
+  NestFastifyApplication,
+} from '@nestjs/platform-fastify';
+import { AppModule } from './app.module';
+import { AllExceptionsFilter } from './common/exceptions/base.exception.filter';
+import { HttpExceptionFilter } from './common/exceptions/http.exception.filter';
+import { TransformInterceptor } from './common/interceptors/transform.interceptor';
+import { generateDocument } from './doc';
+
+declare const module: any;
+
+async function bootstrap() {
+  const app = await NestFactory.create&lt;NestFastifyApplication&gt;(
+    AppModule,
+    new FastifyAdapter(),
+  );
+
+  // 统一响应体格式
+  app.useGlobalInterceptors(new TransformInterceptor());
+
+  // 异常过滤器
+  app.useGlobalFilters(new AllExceptionsFilter(), new HttpExceptionFilter());
+
+  // 接口版本化管理
+  app.enableVersioning({
+    defaultVersion: [VERSION_NEUTRAL, '1', '2'],
+    type: VersioningType.URI,
+  });
+
+<span class="hljs-addition">+  // 启动全局字段校验，保证请求接口字段校验正确。</span>
+<span class="hljs-addition">+  app.useGlobalPipes(new ValidationPipe());</span>
+
+  // 创建文档
+  generateDocument(app)
+
+  // 添加热更新
+  if (module.hot) {
+    module.hot.accept();
+    module.hot.dispose(() =&gt; app.close());
+  }
+
+  await app.listen(3000);
+}
+bootstrap();
+
+</code></pre>
+<ol start="3">
+<li>使用 <code>class-validator</code> 内置的验证装饰器对需要验证的 Dto 参数添加校验。</li>
+</ol>
+<pre><code class="hljs language-ts" lang="ts"><span class="hljs-keyword">import</span> { <span class="hljs-variable constant_">RECEIVE_TYPE</span>, <span class="hljs-variable constant_">MSG_TYPE</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">'@/helper/feishu/message'</span>;
+<span class="hljs-keyword">import</span> { <span class="hljs-title class_">ApiProperty</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">'@nestjs/swagger'</span>;
+<span class="hljs-keyword">import</span> { <span class="hljs-title class_">IsNotEmpty</span>, <span class="hljs-title class_">IsEnum</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">'class-validator'</span>;
+
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">FeishuMessageDto</span> {
+  <span class="hljs-meta">@IsNotEmpty</span>()
+  <span class="hljs-meta">@IsEnum</span>(<span class="hljs-variable constant_">RECEIVE_TYPE</span>)
+  <span class="hljs-meta">@ApiProperty</span>({ <span class="hljs-attr">example</span>: <span class="hljs-string">'email'</span> })
+  <span class="hljs-attr">receive_id_type</span>: <span class="hljs-variable constant_">RECEIVE_TYPE</span>
+
+  <span class="hljs-meta">@IsNotEmpty</span>()
+  <span class="hljs-meta">@ApiProperty</span>({ <span class="hljs-attr">example</span>: <span class="hljs-string">'cookieboty@qq.com'</span> })
+  receive_id?: <span class="hljs-built_in">string</span>
+
+  <span class="hljs-meta">@IsNotEmpty</span>()
+  <span class="hljs-meta">@ApiProperty</span>({ <span class="hljs-attr">example</span>: <span class="hljs-string">'{\"text\":\" test content\"}'</span> })
+  content?: <span class="hljs-built_in">string</span>
+
+  <span class="hljs-meta">@IsNotEmpty</span>()
+  <span class="hljs-meta">@IsEnum</span>(<span class="hljs-variable constant_">MSG_TYPE</span>)
+  <span class="hljs-meta">@ApiProperty</span>({ <span class="hljs-attr">example</span>: <span class="hljs-string">'text'</span> })
+  msg_type?: <span class="hljs-variable constant_">MSG_TYPE</span>
+}
+</code></pre>
+<p>我们使用了 <code>IsNotEmpty</code>（禁止传空）以及 <code>IsEnum</code>(参数必须是有效的枚举）来约束前端传参数，然后一起来看看效果：</p>
+<p><img src="p1-juejin.byteimg.comtos-cn-i-k3u1fbpfcpcfcfaad80df64c5880949e773fe0f2bd~tplv-k3u1fbpfcp-zoom-in-crop-mark3024000.awebp?" alt="image.png" loading="lazy" class="medium-zoom-image"></p>
+<p>如上图所示，由于 <code>email2</code> 并不存在于之前定义好的枚举 <code>RECEIVE_TYPE</code> 里面，所以在参数校验的时候就被拦截并且返回了具体的错误信息 <code>receive_id_type must be a valid enum value</code>，对于前端传参数与错误提示比较友好。</p>
+<p>内置的验证装饰器非常多，下面只是简单的一些例子，更多的装饰器可以<a href="https://link.juejin.cn?target=https%3A%2F%2Fgithub.com%2Ftypestack%2Fclass-validator" target="_blank" rel="nofollow noopener noreferrer" title="https://github.com/typestack/class-validator" ref="nofollow noopener noreferrer">翻阅文档</a></p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>装饰器</th><th>描述</th></tr></thead><tbody><tr><td><strong>常见的验证装饰器</strong></td><td></td></tr><tr><td><code>@IsDefined(value: any)</code></td><td>检查值是否已定义（!== undefined, !== null）。这是唯一忽略 skipMissingProperties 选项的装饰器。</td></tr><tr><td><code>@IsOptional()</code></td><td>检查给定值是否为空（=== null，=== undefined），如果是，则忽略该属性上的所有验证器。</td></tr><tr><td><code>@Equals(comparison: any)</code></td><td>检查值是否等于 ("===") 比较。</td></tr><tr><td><code>@NotEquals(comparison: any)</code></td><td>检查值是否不等于 ("!==") 比较。</td></tr><tr><td><code>@IsEmpty()</code></td><td>检查给定值是否为空（=== ''、=== null、=== 未定义）。</td></tr><tr><td><code>@IsNotEmpty()</code></td><td>检查给定值是否不为空（！== ''，！== null，！== undefined）。</td></tr><tr><td><code>@IsIn(values: any[])</code></td><td>检查值是否在允许值的数组中。</td></tr><tr><td><code>@IsNotIn(values: any[])</code></td><td>检查 value 是否不在不允许的值数组中。</td></tr><tr><td><strong>类型验证装饰器</strong></td><td></td></tr><tr><td><code>@IsBoolean()</code></td><td>检查值是否为布尔值。</td></tr><tr><td><code>@IsDate()</code></td><td>检查值是否为日期。</td></tr><tr><td><code>@IsString()</code></td><td>检查字符串是否为字符串。</td></tr><tr><td><code>@IsNumber(options: IsNumberOptions)</code></td><td>检查值是否为数字。</td></tr><tr><td><code>@IsInt()</code></td><td>检查值是否为整数。</td></tr><tr><td><code>@IsArray()</code></td><td>检查值是否为数组</td></tr><tr><td><code>@IsEnum(entity: object)</code></td><td>检查值是否是有效的枚举</td></tr></tbody></table>
+<ol start="4">
+<li>完成了参数校验后，还剩下最后一步，先看下现在的文档描述。</li>
+</ol>
+<p><img src="p6-juejin.byteimg.comtos-cn-i-k3u1fbpfcpdb00ae1e05024339b3a14e9fe61609e2~tplv-k3u1fbpfcp-zoom-in-crop-mark3024000.awebp?" alt="image.png" loading="lazy" class="medium-zoom-image"></p>
+<p>从上述页面中可以看出，接口字段描述使用 <code>enum</code> 类型在展示上并不直观，对接的前端同学无法感知到底用了什么、需要传什么值才能符合要求，这个可以使用 <code>Swagger</code> 中 <code>ApiProperty</code> 的 <code>enum</code> 参数，来让文档识别出对应的枚举参数：</p>
+<pre><code class="hljs language-ts" lang="ts">  <span class="hljs-meta">@IsNotEmpty</span>()
+  <span class="hljs-meta">@IsEnum</span>(<span class="hljs-variable constant_">RECEIVE_TYPE</span>)
+  <span class="hljs-meta">@ApiProperty</span>({ <span class="hljs-attr">example</span>: <span class="hljs-string">'email'</span>, <span class="hljs-attr">enum</span>: <span class="hljs-variable constant_">RECEIVE_TYPE</span> })
+  <span class="hljs-attr">receive_id_type</span>: <span class="hljs-variable constant_">RECEIVE_TYPE</span>
+</code></pre>
+<p>配置完毕之后可以看到 <code>Swagger</code> 的字段描述也能将对应的枚举正确显示了</p>
+<p><img src="p3-juejin.byteimg.comtos-cn-i-k3u1fbpfcpa7fa969b31964fa3b43b1bcc264dc4b9~tplv-k3u1fbpfcp-zoom-in-crop-mark3024000.awebp?" alt="image.png" loading="lazy" class="medium-zoom-image"></p>
+<h2 data-id="heading-8">写在最后</h2>
+<p>本章的示例代码以上传 <a href="https://link.juejin.cn?target=https%3A%2F%2Fgithub.com%2Fboty-design%2Fgateway%2Ftree%2Fdemo%2Fv5" target="_blank" rel="nofollow noopener noreferrer" title="https://github.com/boty-design/gateway/tree/demo/v5" ref="nofollow noopener noreferrer">demo/v5</a>，需要的同学自取。</p>
+<p>本章以<strong>对接飞书应用</strong>完成了一个简单的业务后端需求开发，包括飞书 <strong>Open Api</strong> 的对接以及<strong>NestJs</strong> 的缓存、<code>Controller</code>、<code>Service</code> 等模块的开发，从小的需求逐步熟悉 <code>NestJs</code> 框架的开发模式与后端业务开发逻辑。</p>
+<p>飞书的三方应用还提供了很多额外的外部接口，例如飞书文档、组织架构（人员信息管理）、审批等等都是非常有用处的功能，在接下去的用户系统中我们就会使用组织架构中的接口作为自建用户系统的底层数据与三方登录。</p>
+<p>大家可以根据自己团队的需求选择对应的模块来减少开发工作量，比如审批的任务流开发就非常麻烦，就算有开源的插件集成，还是需要额外对接消息通知。而直接利用飞书提供的审批接口不仅能减少代码量、提高开发效率同时也打通飞书的交互，给用户最小的心智学习成本。</p>
+<p>如果你有什么疑问，欢迎在评论区提出或者加群沟通。 👏</p></div>
+    </body>
+    </html>

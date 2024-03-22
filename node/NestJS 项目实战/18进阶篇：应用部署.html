@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+    <html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title></title>
+    </head>
+    <body>
+    <div class="markdown-body"><style>.markdown-body{word-break:break-word;line-height:1.75;font-weight:400;font-size:16px;overflow-x:hidden;color:#252933}.markdown-body h1,.markdown-body h2,.markdown-body h3,.markdown-body h4,.markdown-body h5,.markdown-body h6{line-height:1.5;margin-top:35px;margin-bottom:10px;padding-bottom:5px}.markdown-body h1{font-size:24px;line-height:38px;margin-bottom:5px}.markdown-body h2{font-size:22px;line-height:34px;padding-bottom:12px;border-bottom:1px solid #ececec}.markdown-body h3{font-size:20px;line-height:28px}.markdown-body h4{font-size:18px;line-height:26px}.markdown-body h5{font-size:17px;line-height:24px}.markdown-body h6{font-size:16px;line-height:24px}.markdown-body p{line-height:inherit;margin-top:22px;margin-bottom:22px}.markdown-body img{max-width:100%}.markdown-body hr{border:none;border-top:1px solid #ddd;margin-top:32px;margin-bottom:32px}.markdown-body code{word-break:break-word;border-radius:2px;overflow-x:auto;background-color:#fff5f5;color:#ff502c;font-size:.87em;padding:.065em .4em}.markdown-body code,.markdown-body pre{font-family:Menlo,Monaco,Consolas,Courier New,monospace}.markdown-body pre{overflow:auto;position:relative;line-height:1.75}.markdown-body pre>code{font-size:12px;padding:15px 12px;margin:0;word-break:normal;display:block;overflow-x:auto;color:#333;background:#f8f8f8}.markdown-body a{text-decoration:none;color:#0269c8;border-bottom:1px solid #d1e9ff}.markdown-body a:active,.markdown-body a:hover{color:#275b8c}.markdown-body table{display:inline-block!important;font-size:12px;width:auto;max-width:100%;overflow:auto;border:1px solid #f6f6f6}.markdown-body thead{background:#f6f6f6;color:#000;text-align:left}.markdown-body tr:nth-child(2n){background-color:#fcfcfc}.markdown-body td,.markdown-body th{padding:12px 7px;line-height:24px}.markdown-body td{min-width:120px}.markdown-body blockquote{color:#666;padding:1px 23px;margin:22px 0;border-left:4px solid #cbcbcb;background-color:#f8f8f8}.markdown-body blockquote:after{display:block;content:""}.markdown-body blockquote>p{margin:10px 0}.markdown-body ol,.markdown-body ul{padding-left:28px}.markdown-body ol li,.markdown-body ul li{margin-bottom:0;list-style:inherit}.markdown-body ol li .task-list-item,.markdown-body ul li .task-list-item{list-style:none}.markdown-body ol li .task-list-item ol,.markdown-body ol li .task-list-item ul,.markdown-body ul li .task-list-item ol,.markdown-body ul li .task-list-item ul{margin-top:0}.markdown-body ol ol,.markdown-body ol ul,.markdown-body ul ol,.markdown-body ul ul{margin-top:3px}.markdown-body ol li{padding-left:6px}.markdown-body .contains-task-list{padding-left:0}.markdown-body .task-list-item{list-style:none}@media (max-width:720px){.markdown-body h1{font-size:24px}.markdown-body h2{font-size:20px}.markdown-body h3{font-size:18px}}</style><style data-highlight="" data-highlight-key="juejin">.markdown-body pre,.markdown-body pre>code.hljs{color:#333;background:#f8f8f8}.hljs-comment,.hljs-quote{color:#998;font-style:italic}.hljs-keyword,.hljs-selector-tag,.hljs-subst{color:#333;font-weight:700}.hljs-literal,.hljs-number,.hljs-tag .hljs-attr,.hljs-template-variable,.hljs-variable{color:teal}.hljs-doctag,.hljs-string{color:#d14}.hljs-section,.hljs-selector-id,.hljs-title{color:#900;font-weight:700}.hljs-subst{font-weight:400}.hljs-class .hljs-title,.hljs-type{color:#458;font-weight:700}.hljs-attribute,.hljs-name,.hljs-tag{color:navy;font-weight:400}.hljs-link,.hljs-regexp{color:#009926}.hljs-bullet,.hljs-symbol{color:#990073}.hljs-built_in,.hljs-builtin-name{color:#0086b3}.hljs-meta{color:#999;font-weight:700}.hljs-deletion{background:#fdd}.hljs-addition{background:#dfd}.hljs-emphasis{font-style:italic}.hljs-strong{font-weight:700}</style><h2 data-id="heading-0">前言</h2>
+<p>按照目前的进度，相信很多同学已经完成基础篇的内容，也有部分同学完成了用户或者物料系统的开发，所以应广大同学的要求，将应用部署这章提前写出来，方便大家完成项目开发流程中关键的最后一步。</p>
+<p>与开发环境不同，在生产环境中服务端的项目都需要后台启动，如果是前端启动的话，当你关闭 <code>shh</code> 连接或者控制台的时候，程序也就自动退出了，这显然不是我们希望的结果。</p>
+<p>本章将介绍 <code>NestJS</code> 两种方式的发布类型： <code>PM2</code> 与 <code>Docker Compose</code> 部署。</p>
+<h2 data-id="heading-1">PM2</h2>
+<p><a href="https://link.juejin.cn?target=https%3A%2F%2Fpm2.keymetrics.io%2Fdocs%2Fusage%2Fquick-start%2F" target="_blank" rel="nofollow noopener noreferrer" title="https://pm2.keymetrics.io/docs/usage/quick-start/" ref="nofollow noopener noreferrer">PM2</a> 是一款使用于生产环境的 <code>NodeJS</code> 的进程管理工具，操作非常简便，内置了进程管理、监控、日志以及负载均衡的能力。</p>
+<p>首先需要安装 <code>PM2</code> 的依赖，一般会安装在全局依赖：</p>
+<pre><code class="hljs language-shell" lang="shell"><span class="hljs-meta prompt_">$ </span><span class="bash">yarn global add pm2</span>
+</code></pre>
+<p>普通的前端项目启动的话，直接使用以下命令就行了：</p>
+<pre><code class="hljs language-shell" lang="shell">pm2 start app.js
+</code></pre>
+<p>但毕竟是这一个实战的项目而且也有不同的环境变量存在，直接这么启动并不合适，可以借助 <code>Ecosystem File</code> 来完成我们的需求。</p>
+<ol>
+<li>项目根目录新建 <code>ecosystem.config.js</code>：</li>
+</ol>
+<pre><code class="hljs language-js" lang="js"><span class="hljs-variable language_">module</span>.<span class="hljs-property">exports</span> = {
+  <span class="hljs-attr">apps</span>: [
+    {
+      <span class="hljs-attr">name</span>: <span class="hljs-string">"gateway"</span>,
+      <span class="hljs-attr">script</span>: <span class="hljs-string">"dist/src/main.js"</span>,
+      <span class="hljs-attr">env_production</span>: {
+        <span class="hljs-attr">RUNNING_ENV</span>: <span class="hljs-string">"prod"</span>
+      },
+      <span class="hljs-attr">env_development</span>: {
+        <span class="hljs-attr">RUNNING_ENV</span>: <span class="hljs-string">"dev"</span>
+      }
+    }
+  ]
+}
+</code></pre>
+<ol start="2">
+<li>添加 <code>package.json</code> 中的 <code>scripts</code> 构建命令：</li>
+</ol>
+<pre><code class="hljs language-diff" lang="diff"><span class="hljs-addition">+ "build": "nest build",</span>
+<span class="hljs-addition">+ "build:webpack": "nest build --webpack",</span>
+</code></pre>
+<p><img src="p1-juejin.byteimg.comtos-cn-i-k3u1fbpfcpf9413666d6ab417bb3a04f8387bab393~tplv-k3u1fbpfcp-zoom-in-crop-mark3024000.awebp?" alt="image.png" loading="lazy" class="medium-zoom-image"></p>
+<p>对比一下两种构建命令的不同点：</p>
+<ul>
+<li><code>nest build</code>：将 <code>NestJS</code> 项目的源码从 <code>TS</code> 编译成 <code>JS</code> 之后再使用 <code>node main.js</code> 来运行项目，这样有个好处是还能看到大概的工程路径，也可以使用 <code>TypeOrm</code> 动态注册实体类的功能。</li>
+<li><code>nest build --webpack</code> 会将 <code>NestJS</code> 项目打包成一个独立的 <code>main.js</code>，从文件类型的角度来说，做了一次混淆跟合并，原理跟之前提到过的热更新启动是一样的，按照这种模式的话来使用的话，<strong>就不能使用动态注册实体类的功能，只能手动引入实体类</strong>。</li>
+</ul>
+<p>两种构建产物的方式都可以完成要求，按照自己的喜好选择就行，但无论是 <code>webpack</code> 打包成单文件的模式还是使用 <code>TSC</code> 模式生成 <code>JS</code> 项目代码，都需要在发布工程里面添加 <code>node_modules</code>，否则是没办法正常启动。</p>
+<p>因为这两种模式并没有将依赖直接打包进产物内，虽然可以曲线修改 <code>webpack.config</code> 可以使得在 <code>webpack</code> 模式下，能将所有的依赖都打入单文件，但是由于环境依赖的问题，这种模式的产物大概率只能在相同的环境运行依赖，例如 <code>windows</code> 下打包的产物是无法部署在 <code>linux</code> 环境下。</p>
+<ol start="3">
+<li>在 <code>package.json</code> 的 <code>scripts</code> 中添加启动脚本：</li>
+</ol>
+<pre><code class="hljs language-diff" lang="diff"><span class="hljs-addition">+ "start:prod": "nest build &amp;&amp; pm2 start ecosystem.config.js --env production"</span>
+</code></pre>
+<p>添加完毕之后，执行 <code>yarn start:prod</code> 出现如下界面既完成了项目生产环境的部署，如果不能正常访问接口的话，可以使用 <code>pm2 log gateway</code> 查看启动日志，如果按照我给的方案走一般不会出现问题，有问题的话，大概率是配置文件找不到，调整配置文件即可。</p>
+<p><img src="p9-juejin.byteimg.comtos-cn-i-k3u1fbpfcp9e6ebe6ebbc04661893303c0aa76ba47~tplv-k3u1fbpfcp-zoom-in-crop-mark3024000.awebp?" alt="image.png" loading="lazy" class="medium-zoom-image"></p>
+<blockquote>
+<p><strong>切记，如果使用 webpack 模式部署生产环境，一定要手动注册实体类！！！！不然会报错的！！！！</strong></p>
+</blockquote>
+<p>更多的 <code>PM2</code> 的 <code>API</code> 使用与黑科技，用兴趣的同学可以自己进行摸索，这里就不过多介绍了。</p>
+<h2 data-id="heading-2">Docker Compose</h2>
+<p><code>Docker Compose</code> 项目是 <code>Docker</code> 官方的开源项目，负责实现对 <code>Docker</code> 容器集群的快速编排日常开发工作中，经常会碰到需要多个容器相互配合来完成某项任务的情况。</p>
+<p>比如我们的网关服务体系就由 <strong>3</strong> 个不同的服务组成，其中还不包括 <code>Redis</code>、<code>Mysql</code> 这种中间件的服务，所以每个服务都使用直接 <code>Docker</code> 来部署的话，效率低下而且维护麻烦，而借助 <code>Docker Compose</code> 可以将我们的服务统一一次性部署完成。</p>
+<p><strong>第一步</strong>：要把项目工程打包成 <code>image</code>，根路径创建文件 <code>Dockerfile</code>:</p>
+<pre><code class="hljs language-arduino" lang="arduino">FROM node:<span class="hljs-number">16</span>-alpine3<span class="hljs-number">.15</span>
+
+RUN mkdir -p /home/app/
+
+WORKDIR /home/app/
+
+COPY package*.json ./
+
+RUN npm install
+
+COPY . .
+
+EXPOSE <span class="hljs-number">3000</span>
+
+ENTRYPOINT [<span class="hljs-string">"npm"</span>, <span class="hljs-string">"run"</span>]
+
+CMD [<span class="hljs-string">"start"</span>]
+</code></pre>
+<p><strong>第二步</strong>：根目录运行以下脚本来就行构建：</p>
+<pre><code class="hljs language-shell" lang="shell"><span class="hljs-meta prompt_">$ </span><span class="bash">docker build -f ./Dockerfile -t gateway:0.0.1 .</span>
+</code></pre>
+<p><img src="p3-juejin.byteimg.comtos-cn-i-k3u1fbpfcp1c719d5ac1ad49b58bdc554c7e672868~tplv-k3u1fbpfcp-zoom-in-crop-mark3024000.awebp?" alt="image.png" loading="lazy" class="medium-zoom-image"></p>
+<p><strong>第三步</strong>：运行以下命令既可以启动容器运行：</p>
+<pre><code class="hljs language-shell" lang="shell">docker run -d -e RUNNING_ENV=prod -p 3000:3000 gateway:0.0.1
+</code></pre>
+<p><img src="p1-juejin.byteimg.comtos-cn-i-k3u1fbpfcp18c0205306a64373a6361e6ee15438eb~tplv-k3u1fbpfcp-zoom-in-crop-mark3024000.awebp?" alt="image.png" loading="lazy" class="medium-zoom-image"></p>
+<p>使用 <code>docker logs [容器id] </code>既可以看到我们的项目已经正常启动了：</p>
+<p><img src="p3-juejin.byteimg.comtos-cn-i-k3u1fbpfcpc22bfa0ebc0b47ca95ede19bfd303fd0~tplv-k3u1fbpfcp-zoom-in-crop-mark3024000.awebp?" alt="image.png" loading="lazy" class="medium-zoom-image"></p>
+<p>以上是直接使用 <code>Docker</code> 来部署项目，换成 <code>Docker Compose</code> 的话，则需要额外新建文件 <code>docker-compose.gateway-service-dev.yml</code>：</p>
+<pre><code class="hljs language-yaml" lang="yaml"><span class="hljs-attr">version:</span> <span class="hljs-string">"3"</span>
+<span class="hljs-attr">services:</span>
+  <span class="hljs-attr">gateway-service-dev:</span>
+    <span class="hljs-attr">container_name:</span> <span class="hljs-string">gateway-service-dev</span>
+    <span class="hljs-attr">build:</span>
+      <span class="hljs-attr">context:</span> <span class="hljs-string">./</span>
+      <span class="hljs-attr">dockerfile:</span> <span class="hljs-string">Dockerfile</span>
+    <span class="hljs-attr">ports:</span>
+      <span class="hljs-bullet">-</span> <span class="hljs-string">"3000:3000"</span>
+    <span class="hljs-attr">environment:</span>
+      <span class="hljs-attr">RUNNING_ENV:</span> <span class="hljs-string">'dev'</span>
+    <span class="hljs-attr">networks:</span>
+      <span class="hljs-bullet">-</span> <span class="hljs-string">servicebus</span>
+<span class="hljs-attr">networks:</span>
+  <span class="hljs-attr">servicebus:</span>
+    <span class="hljs-attr">name:</span> <span class="hljs-string">servicebus</span>
+</code></pre>
+<p>启动命令为：</p>
+<pre><code class="hljs language-shell" lang="shell">docker-compose -f docker-compose.gateway-service-dev.yml up -d  --build
+</code></pre>
+<p>其中 <code>build</code> 参数代表构建过程，所以我们在使用 docker-compose 构建的时候可以省去第二步构建镜像的步骤，配合 <code>docker file</code> 中的前置安装依赖步骤，可以在每次更新代码后需要重新构建时，项目依赖不更新的情况下，使用缓存构建，大幅度减少构建时间。</p>
+<h2 data-id="heading-3">写在最后</h2>
+<p>部署篇的章节为了方便大家快速使用，目前较为简单，等待所有的项目都完成之后，会在 <code>docker compose</code> 部分扩充内容，给大家展示容器编排的优势。</p>
+<p>另外如果有机会或者想尝试 <code>K8S</code> 部署的话，可以参考 <code>Devops</code> 的小册，里面有 <code>Rancher</code> 章节是关于集群部署的</p>
+<p>如果你有什么疑问，欢迎在评论区提出或者加群沟通。 👏</p></div>
+    </body>
+    </html>
